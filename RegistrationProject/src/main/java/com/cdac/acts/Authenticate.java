@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cdac.acts.DAO.AuthenticateDAO;
 
@@ -59,7 +60,9 @@ public class Authenticate extends HttpServlet {
 			boolean isValid = adao.isValidUser(userName, password);
 			if(isValid) {
 				//out.println("<h1 style='color:green;'>Welcome to Shop Bazaar shopping site</h1>");
-				
+				// Creating the session
+				HttpSession session = request.getSession();
+				session.setAttribute("userName",userName);
 				response.sendRedirect(request.getContextPath()+"/Category");
 			}else {
 				out.println("<h1 style='color:red'>Invalid Input or Password</h1>");

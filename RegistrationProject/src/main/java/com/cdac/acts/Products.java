@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cdac.acts.DAO.ProductDAO;
 
@@ -34,6 +35,11 @@ public class Products extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 		ProductDAO pd = new ProductDAO();
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			response.sendRedirect("Form.html");
+			return;
+		}
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head>");
@@ -44,6 +50,22 @@ public class Products extends HttpServlet {
 		out.println("th { background-color: #4CAF50; color: white; }");
 		out.println("tr:nth-child(even) { background-color: #f2f2f2; }");
 		out.println("img { border-radius: 8px; }");
+		out.println(".edit-btn {");
+		out.println("  background-color: #4CAF50;");
+		out.println("  color: white;");
+		out.println("  border: none;");
+		out.println("  padding: 10px 16px;");
+		out.println("  text-align: center;");
+		out.println("  text-decoration: none;");
+		out.println("  display: inline-block;");
+		out.println("  font-size: 14px;");
+		out.println("  border-radius: 6px;");
+		out.println("  cursor: pointer;");
+		out.println("  transition: background-color 0.3s ease;");
+		out.println("}");
+		out.println(".edit-btn:hover {");
+		out.println("  background-color: #45a049;");
+		out.println("}");
 		out.println("</style>");
 		out.println("</head>");
 		out.println("<body>");
@@ -53,6 +75,7 @@ public class Products extends HttpServlet {
 		out.println("<th>Description</th>");
 		out.println("<th>Price</th>");
 		out.println("<th>Image</th>");
+		out.println("<th>Add To Cart</th>");
 		out.println("</tr>");
 		
 		
@@ -66,6 +89,11 @@ public class Products extends HttpServlet {
 				out.println("<td>" + rs.getString("productDescription")+"</td>");
 				out.println("<td>"+rs.getInt("productPrice") + "</td>");
 				out.println("<td><img src='Images/" + rs.getString("ProductImageUrl") + "' height='100px' width='100px'/></td>");
+				out.println("<td><a href='AddCart?categoryId=" + rs.getInt("categoryId") +
+			            "&productId=" + rs.getInt("productId") +
+			            "&price=" + rs.getInt("productPrice") + 
+			            "'><button class='edit-btn'>Add To Cart</button></a></td>");
+
 				out.println("</tr>");
 			}
 			out.println("</table>");

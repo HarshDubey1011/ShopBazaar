@@ -40,7 +40,7 @@ public class AddProduct extends HttpServlet {
 			boolean addCategory = apd.addProduct(productName, productDescription, productPrice, productImageUrl);
 			System.out.println(addCategory);
 			if(addCategory) {
-				response.sendRedirect("/Category");
+				response.sendRedirect(request.getContextPath()+"/Category");
 			}else {
 				out.println("<h1 style='color:red'>Invalid Input or Password</h1>");
 			}

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cdac.acts.DAO.CategoryDAO;
 
@@ -38,6 +39,11 @@ public class Category extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 		CategoryDAO cad = new CategoryDAO();
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			response.sendRedirect("Form.html");
+			return;
+		}
 		
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
@@ -67,6 +73,7 @@ public class Category extends HttpServlet {
 		out.println("<th>Delete</th>");
 		out.println("</tr>");
 			ResultSet rs = cad.isValid();
+
 			while(rs.next()) {
 				out.println("<tr>");
 				out.println("<td><a href='Products?categoryId=" + rs.getInt("categoryId") + "'>" + rs.getString("categoryName") + "</a></td>");
