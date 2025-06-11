@@ -61,8 +61,11 @@ public class Authenticate extends HttpServlet {
 			if(isValid) {
 				//out.println("<h1 style='color:green;'>Welcome to Shop Bazaar shopping site</h1>");
 				// Creating the session
+				int userId = adao.getUserId(userName);
+				System.out.println("Authenticate: "+userId);
 				HttpSession session = request.getSession();
 				session.setAttribute("userName",userName);
+				session.setAttribute("userId",userId);
 				response.sendRedirect(request.getContextPath()+"/Category");
 			}else {
 				out.println("<h1 style='color:red'>Invalid Input or Password</h1>");

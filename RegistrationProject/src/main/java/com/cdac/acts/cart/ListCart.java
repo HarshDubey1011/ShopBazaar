@@ -85,9 +85,12 @@ public class ListCart extends HttpServlet {
 				out.println("</table>");
 				out.println("<div class='total'><h3>Total: " + total + "</h3></div>");
 				out.println("<a href='Category'>Continue Shopping</a>");
+				out.println("<a href='Payment.html'>Payment</a>");
 				out.println("</div>");
 				out.println("</body>");
 				out.println("</html>");
+				
+				session.setAttribute("total", total);
 			}catch(CartException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
